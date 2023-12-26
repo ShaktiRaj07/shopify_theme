@@ -1,0 +1,216 @@
+<style>
+  
+section.video h2 {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3.6rem;
+  }
+
+  .video{
+    display: inline list-item;
+  }
+  .video-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+.sidebar {
+    float: left;
+    width: 27%;
+    background-color: #fff;
+    padding: 20px;
+    margin-left: 2%;
+    margin-top: 4rem;
+  }
+
+  /* Main content styles */
+  .main-content {
+    float: right;
+    width: 70%;
+    padding: 20px;
+  }
+
+
+.video-list {
+  width: 75%; /* Adjust as needed */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.video-item {
+  width: 100%; /* Adjust as needed */
+  padding: 5px 97px 22px 3px;
+}
+.video-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+ .tag-ul {
+  display: inline flow-root list-item;
+  padding: 3px;
+  margin-top: 20px;
+  list-style-type: none;
+  font-size: 10.2px;
+}
+
+.tag-li {
+  margin-bottom: 8px;
+}
+
+.tag-li a {
+  display: inline-block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333; /* Set the initial text color */
+  border: 1px solid #333; /* Set the initial border color */
+  border-radius: 4px;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s; /* Add smooth transition */
+}
+
+.tag-li a:hover {
+  color: #fff; 
+  background-color: #333;
+  border-color: #333; 
+}
+  
+  @media screen and (min-width: 768px) {
+    .video-item {
+      min-width: 50%; /* Adjust for two columns on larger screens */
+    }
+
+  }
+  
+</style>
+
+<section class="video">
+  <h2>{{ section.settings.vid_heading }}</h2>
+  <div class="sidebar">
+    <h3>Video Tags</h3>
+    {% for block in section.blocks %}
+      <ul class="tag-ul">
+        {% for tag in block.settings.vid_tags %}
+          <li class="tag-li"><a href="#" data-tag="{{ tag | handleize }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+  <div class="main-content">
+    <div class="video-section" id="videoSection">
+      {% for block in section.blocks %}
+        <div class="video-list" data-tag="{{ block.settings.vid_tags | handleize }}">
+          <p class="video-text">{{ block.settings.vid_text }}</p>
+          <div class="video-item">
+            {% if block.settings.select == 'MP4' %}
+              {% if block.settings.vid != blank %}
+                <video width="100%" height="100%" controls="false" playinline {% if block.settings.check %}autoplay="autoplay" loop{% endif %} poster="{{ block.settings.poster | img_url: 'master' }}" loading='lazy'>
+                  <source src="{{ block.settings.vid }}" type="video/mp4">
+                  <source src="{{ block.settings.vid }}" type="video/ogg">
+                </video>
+              {% endif %}
+            {% else %}
+              {% if block.settings.i_vid != blank %}
+                <iframe width="100%" height="315" src="{{ block.settings.i_vid }}{% if block.settings.vid_auto %}?autoplay=1{% endif %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tags = document.querySelectorAll('.tag-li a');
+    tags.forEach(function (tag) {
+      tag.addEventListener('click', function (e) {
+        e.preventDefault();
+        var targetTag = this.getAttribute('data-tag');
+        var targetVideo = document.querySelector('.video-list[data-tag="' + targetTag + '"]');
+        if (targetVideo) {
+          targetVideo.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Section",
+  "settings": [
+
+    {
+    "type": "text",
+    "id": "vid_heading",
+    "label": "Heading",
+    "default": "Video With Text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Add Video",
+      "limit": 10,
+    
+    "settings": [
+      {
+      "type": "text",
+      "id": "vid_text",
+      "label": "Video Text",
+      "default": "Video With Text"
+      },
+       {
+      "type": "text",
+      "id": "vid_tags",
+      "label": "Video Tag"
+      },
+      {
+      "type": "radio",
+      "id": "select",
+      "label": "Video type",
+      "options": [
+      {
+      "value": "MP4",
+      "label": "MP4"
+      },
+      {
+      "value": "iframe",
+      "label": "Youtube/Vimeo"
+      }
+      ],
+      "default": "MP4"
+      },
+      {
+      "type": "url",
+      "id": "vid",
+      "label": "MP4 video URL"
+      },
+      {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster on MP4 video"
+      },
+      {
+      "type": "checkbox",
+      "id": "check",
+      "label": "Video autoplay"
+      },
+      {
+      "type": "url",
+      "id": "i_vid",
+      "label": "Youtube/Vimeo video URL"
+      }
+    ]
+  }
+],
+  
+  "presets": [
+    {
+      "category": "Custom",
+      "name": "Video Section"
+    }
+  ]
+}
+{% endschema %}
