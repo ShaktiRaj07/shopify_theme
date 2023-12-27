@@ -1,35 +1,3 @@
-<div id="vid-txt-{{ section.id }}" class="vid-text-con">
-<div class="vid-text-wra page-width" >
-<div class="vid-with-text-box" {% if section.settings.bg_clr %}style="background:{{ section.settings.body_text }}"{% endif %}>
-<div class="text-content">
-<div class="content">
-<h2>{{ section.settings.heading }}</h2>
-<p>{{ section.settings.content }}</p>
-<div class="section-btn">
-<a class="btn" href="{{ section.settings.url }}">{{ section.settings.btn_label }}</a>
-</div>
-</div>
-</div>
-<div class="video-section">
-<div class="m_video">
-{% if section.settings.select == 'MP4' %}
-{% if section.settings.vid != blank %}
-<video width="100%" height="100%" controls playinline {% if section.settings.check %}autoplay loop{% endif %} poster="{{ section.settings.poster |img_url: 'master' }}" loading='lazy'>
-<source src="{{ section.settings.vid }}" type="video/mp4">
-<source src="{{ section.settings.vid }}" type="video/ogg">
-</video>
-{% endif %}
-{% else %}
-{% if section.settings.i_vid != blank %}
-<iframe width="100%" height="315" src="{{ section.settings.i_vid }}{% if section.settings.vid_auto %}?autoplay=1{% endif %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{% endif %}
-{% endif %}
-</div>
-</div>
-</div>
-</div>
-</div>
-
 <style>
 .vid-text-wra {
 margin-top: 30px;
@@ -103,7 +71,39 @@ padding-bottom: 10px;
 }
 </style>
 
- 
+<div id="vid-txt-{{ section.id }}" class="vid-text-con">
+<div class="vid-text-wra page-width" >
+<div class="vid-with-text-box" {% if section.settings.bg_clr %}style="background:{{ section.settings.body_text }}"{% endif %}>
+<div class="text-content">
+<div class="content">
+<h2>{{ section.settings.heading }}</h2>
+<p>{{ section.settings.content }}</p>
+<div class="section-btn">
+<a class="btn" href="{{ section.settings.url }}">{{ section.settings.btn_label }}</a>
+</div>
+</div>
+</div>
+<div class="video-section">
+<div class="m_video">
+{% if section.settings.select == 'MP4' %}
+{% if section.settings.vid != blank %}
+<video width="100%" height="100%" controls playinline {% if section.settings.check %}autoplay loop{% endif %} poster="{{ section.settings.poster |img_url: 'master' }}" loading='lazy'>
+<source src="{{ section.settings.vid }}" type="video/mp4">
+<source src="{{ section.settings.vid }}" type="video/ogg">
+</video>
+{% endif %}
+{% else %}
+{% if section.settings.i_vid != blank %}
+<iframe width="100%" height="315" src="{{ section.settings.i_vid }}{% if section.settings.vid_auto %}?autoplay=1{% endif %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% endif %}
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 
 {% schema %}
 {
