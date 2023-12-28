@@ -82,7 +82,10 @@ section.video h2 {
   }
   
 </style>
-
+{% unless pages == empty %}
+  <h1>{{ pages.frontpage.title }}</h1>
+  <div>{{ pages.frontpage.content }}</div>
+{% endunless %}
 <section class="video">
   <h2>{{ section.settings.vid_heading }}</h2>
   <div class="sidebar">
