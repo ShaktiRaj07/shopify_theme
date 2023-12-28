@@ -117,7 +117,13 @@ section.video h2 {
     </div>
   </div>
 </section>
-
+{% if customer.name == "kevin" %}
+  Hey Kevin!
+{% elsif customer.name == "anonymous" %}
+  Hey Anonymous!
+{% else %}
+  Hi Stranger!
+{% endif %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var tags = document.querySelectorAll('.tag-li a');
