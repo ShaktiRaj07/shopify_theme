@@ -82,7 +82,11 @@ section.video h2 {
   }
   
 </style>
+{% assign name = "Tobi" %}
 
+{% if name %}
+  This text will always appear since "name" is defined.
+{% endif %}
 <section class="video">
   <h2>{{ section.settings.vid_heading }}</h2>
   <div class="sidebar">
