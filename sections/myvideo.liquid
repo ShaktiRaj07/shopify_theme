@@ -80,7 +80,11 @@ section.video h2 {
   }
   
 </style>
-
+<table>
+{% tablerow product in collection.products %}
+  {{ product.title }}
+{% endtablerow %}
+</table>
 <section class="video">
   <h2>{{ section.settings.vid_heading }}</h2>
   <div class="sidebar">
