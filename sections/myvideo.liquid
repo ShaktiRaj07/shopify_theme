@@ -80,17 +80,6 @@ section.video h2 {
   }
   
 </style>
-All products:
-{% for product in products %}
-- {{ product.title }}
-{% endfor %}
-
-{% assign available_products = products | where: "available" %}
-
-Available products:
-{% for product in available_products %}
-- {{ product.title }}
-{% endfor %}
 
 <section class="video">
   <h2>{{ section.settings.vid_heading }}</h2>
