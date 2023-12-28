@@ -80,7 +80,9 @@ section.video h2 {
   }
   
 </style>
-
+{% if product.title == "Awesome Shoes" %}
+  These shoes are awesome!
+{% endif %}
 <section class="video">
   <h2>{{ section.settings.vid_heading }}</h2>
   <div class="sidebar">
